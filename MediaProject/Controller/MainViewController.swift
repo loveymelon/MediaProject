@@ -40,6 +40,7 @@ class MainViewController: UIViewController {
             MovieModel.top = result
             self.tableView.reloadData()
         }
+        
     }
     
 }

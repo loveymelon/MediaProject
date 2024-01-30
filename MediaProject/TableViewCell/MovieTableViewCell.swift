@@ -51,13 +51,14 @@ extension MovieTableViewCell: ConfigureUIProtocol {
         }
         
         self.movieCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(self.categoryLabel.snp.bottom).offset(5)
+            make.top.equalTo(self.categoryLabel.snp.bottom)
             make.horizontalEdges.bottom.equalToSuperview()
         }
     }
     
     func configureView() {
         self.backgroundColor = .black
+        self.movieCollectionView.backgroundColor = .black
     }
 }
 
@@ -67,7 +68,8 @@ extension MovieTableViewCell {
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumInteritemSpacing = 5
-        flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.width / 4 , height: UIScreen.main.bounds.height / 4 - 30)
+//        flowLayout.minimumLineSpacing = 0
+        flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.width / 3 , height: UIScreen.main.bounds.height / 4)
         return flowLayout
     }
     
