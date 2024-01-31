@@ -20,27 +20,41 @@ class MainViewController: UIViewController {
     
     let titleArray = ["Popular", "Top Rate", "Trending"]
     
+    var popularData: [PopularMovies] = []
+    var trendData: [TrendTV] = []
+    var topData: [TopRates] = []
+    
+    let group = DispatchGroup()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureUI()
         
+        group.enter()
         TMDBAPIManager.shared.fetchPopularMovie { result in
-            MovieModel.popular = result
-            self.tableView.reloadData()
+//            MovieModel.popular = result
+            self.popularData = result
+            self.group.leave()
         }
         
+        group.enter()
         TMDBAPIManager.shared.fetchTrendingTV { result in
-            MovieModel.trend = result
-            print(MovieModel.trend)
-            self.tableView.reloadData()
+//            MovieModel.trend = result
+            self.trendData = result
+            self.group.leave()
         }
         
+        group.enter()
         TMDBAPIManager.shared.fetchTopRate { result in
-            MovieModel.top = result
-            self.tableView.reloadData()
+//            MovieModel.top = result
+            self.topData = result
+            self.group.leave()
         }
         
+        group.notify(queue: .main) {
+            self.tableView.reloadData()
+        }
     }
     
 }
@@ -98,11 +112,11 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         switch collectionView.tag {
         case 0:
-            number = MovieModel.popular.count
+            number = popularData.count
         case 1:
-            number = MovieModel.trend.count
+            number = trendData.count
         case 2:
-            number = MovieModel.top.count
+            number = topData.count
         default:
             print("error")
         }
@@ -112,23 +126,38 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Helper.movieCollectionCellIdentifier, for: indexPath) as! MovieCollectionViewCell
+        let baseUrl = "https://image.tmdb.org/t/p/w500"
         if collectionView.tag == 0 {
-            let item = MovieModel.popular[indexPath.item]
-            let url = URL(string: "https://image.tmdb.org/t/p/w500\(item.posterPath!)")
+            let item = popularData[indexPath.item]/*MovieModel.popular[indexPath.item]*/
+            let url = URL(string: "\(baseUrl)\(item.posterPath ?? "a")")
             cell.mainImageView.kf.setImage(with: url)
             cell.imageLabel.text = item.name
         } else if collectionView.tag == 1 {
-            let item = MovieModel.trend[indexPath.item]
-            let url = URL(string: "https://image.tmdb.org/t/p/w500\(item.posterPath)")
+            let item = trendData[indexPath.item]/*MovieModel.trend[indexPath.item]*/
+            let url = URL(string: "\(baseUrl)\(item.posterPath)")
             cell.mainImageView.kf.setImage(with: url)
             cell.imageLabel.text = item.name
         } else if collectionView.tag == 2 {
-            let item = MovieModel.top[indexPath.item]
-            let url = URL(string: "https://image.tmdb.org/t/p/w500\(item.posterPath!)")
+            let item = topData[indexPath.item]/*MovieModel.top[indexPath.item]*/
+            let url = URL(string: "\(baseUrl)\(item.posterPath!)")
             cell.mainImageView.kf.setImage(with: url)
             cell.imageLabel.text = item.title
         }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailVC = TVDetailViewController()
+        print(#function)
+        if collectionView.tag == 0 {
+            detailVC.id = popularData[indexPath.item].id
+        } else if collectionView.tag == 1 {
+            detailVC.id = topData[indexPath.item].id
+        } else {
+            detailVC.id = trendData[indexPath.item].id
+        }
+        
+        self.navigationController?.pushViewController(detailVC, animated: true)
     }
     
 }

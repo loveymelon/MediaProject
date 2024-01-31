@@ -46,7 +46,7 @@ extension MovieTableViewCell: ConfigureUIProtocol {
     func configureLayout() {
         self.categoryLabel.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(20)
-            make.top.equalTo(self.contentView.snp.top).inset(5)
+            make.top.equalTo(self.contentView.snp.top)
             make.height.equalTo(22)
         }
         

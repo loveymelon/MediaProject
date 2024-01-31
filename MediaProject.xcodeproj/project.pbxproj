@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF5EF77B2B6A6FF2003CB20C /* TVDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EF77A2B6A6FF2003CB20C /* TVDetailModel.swift */; };
+		DF5EF77D2B6A732A003CB20C /* TVDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EF77C2B6A732A003CB20C /* TVDetailViewController.swift */; };
+		DF5EF7802B6A7920003CB20C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EF77F2B6A7920003CB20C /* BaseViewController.swift */; };
+		DF5EF7822B6A8496003CB20C /* RecommendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EF7812B6A8496003CB20C /* RecommendModel.swift */; };
+		DF5EF7842B6A88AA003CB20C /* CreditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EF7832B6A88AA003CB20C /* CreditModel.swift */; };
 		DF6000032B690E91005AA206 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DF6000022B690E91005AA206 /* .gitignore */; };
 		DF6000052B690EB1005AA206 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6000042B690EB1005AA206 /* MainViewController.swift */; };
 		DF6000082B690ED8005AA206 /* TMDBAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6000072B690ED8005AA206 /* TMDBAPIManager.swift */; };
@@ -31,6 +36,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DF5EF77A2B6A6FF2003CB20C /* TVDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVDetailModel.swift; sourceTree = "<group>"; };
+		DF5EF77C2B6A732A003CB20C /* TVDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVDetailViewController.swift; sourceTree = "<group>"; };
+		DF5EF77F2B6A7920003CB20C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		DF5EF7812B6A8496003CB20C /* RecommendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendModel.swift; sourceTree = "<group>"; };
+		DF5EF7832B6A88AA003CB20C /* CreditModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditModel.swift; sourceTree = "<group>"; };
 		DF6000022B690E91005AA206 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		DF6000042B690EB1005AA206 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		DF6000072B690ED8005AA206 /* TMDBAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBAPIManager.swift; sourceTree = "<group>"; };
@@ -67,6 +77,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DF5EF77E2B6A7913003CB20C /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				DF5EF77F2B6A7920003CB20C /* BaseViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		DF6000062B690EC4005AA206 /* APIManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				DF6000042B690EB1005AA206 /* MainViewController.swift */,
+				DF5EF77C2B6A732A003CB20C /* TVDetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -90,6 +109,9 @@
 				DF60002B2B69276D005AA206 /* MovieModel.swift */,
 				DF60002D2B693CA5005AA206 /* TrendModel.swift */,
 				DF60002F2B693F50005AA206 /* TopModel.swift */,
+				DF5EF77A2B6A6FF2003CB20C /* TVDetailModel.swift */,
+				DF5EF7812B6A8496003CB20C /* RecommendModel.swift */,
+				DF5EF7832B6A88AA003CB20C /* CreditModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -138,6 +160,7 @@
 		DF60FFED2B690C72005AA206 /* MediaProject */ = {
 			isa = PBXGroup;
 			children = (
+				DF5EF77E2B6A7913003CB20C /* Base */,
 				DF6000242B6917D6005AA206 /* Protocol */,
 				DF6000212B691634005AA206 /* CollectionViewCell */,
 				DF60001E2B69149E005AA206 /* TableViewCell */,
@@ -243,13 +266,18 @@
 				DF6000192B691048005AA206 /* PopularModel.swift in Sources */,
 				DF6000052B690EB1005AA206 /* MainViewController.swift in Sources */,
 				DF6000262B6917F3005AA206 /* ConfigureUI.swift in Sources */,
+				DF5EF77D2B6A732A003CB20C /* TVDetailViewController.swift in Sources */,
 				DF6000302B693F50005AA206 /* TopModel.swift in Sources */,
 				DF60FFEF2B690C72005AA206 /* AppDelegate.swift in Sources */,
+				DF5EF77B2B6A6FF2003CB20C /* TVDetailModel.swift in Sources */,
+				DF5EF7822B6A8496003CB20C /* RecommendModel.swift in Sources */,
 				DF60FFF12B690C72005AA206 /* SceneDelegate.swift in Sources */,
 				DF60001D2B69149A005AA206 /* MovieTableViewCell.swift in Sources */,
 				DF60001B2B6911AB005AA206 /* APIKey.swift in Sources */,
 				DF6000232B69164F005AA206 /* MovieCollectionViewCell.swift in Sources */,
 				DF60002E2B693CA5005AA206 /* TrendModel.swift in Sources */,
+				DF5EF7842B6A88AA003CB20C /* CreditModel.swift in Sources */,
+				DF5EF7802B6A7920003CB20C /* BaseViewController.swift in Sources */,
 				DF6000082B690ED8005AA206 /* TMDBAPIManager.swift in Sources */,
 				DF6000202B6914FE005AA206 /* Helper.swift in Sources */,
 			);
