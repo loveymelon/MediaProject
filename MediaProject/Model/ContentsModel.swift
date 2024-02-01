@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct PopularModel: Decodable {
-    let results: [PopularMovies]
+struct ContentsModel: Decodable {
+    let results: [Contents]
 }
 
-struct PopularMovies: Decodable {
+struct Contents: Decodable {
     let id: Int
     let name: String
     let posterPath: String?

@@ -21,36 +21,21 @@ struct TMDBAPIManager {
         "Authorization": APIKey.key
     ]
     
-    func fetchPopularMovie(completionHandler: @escaping ([PopularMovies]) -> Void) {
-        let url = "discover/tv"
+    func fetchContents(api: TMDBAPI, completionHandler: @escaping (ContentsModel) -> Void) {
         
-        AF.request(baseUrl + url, headers: header).validate(statusCode: 200..<300).responseDecodable(of: PopularModel.self) { response in
+        AF.request(api.endPoint, method: api.method, headers: api.header).validate(statusCode: 200..<300).responseDecodable(of: ContentsModel.self) { response in
             switch response.result {
             case .success(let success):
-                completionHandler(success.results)
+                completionHandler(success)
             case .failure(let failure):
                 print(failure)
             }
         }
     }
     
-    func fetchTrendingTV(completionHandler: @escaping ([TrendTV]) -> Void) {
-        let url = "trending/tv/week"
+    func fetchTopRate(api: TMDBAPI, completionHandler: @escaping ([TopRates]) -> Void) {
         
-        AF.request(baseUrl + url, headers: header).validate(statusCode: 200..<300).responseDecodable(of: TrendModel.self) { response in
-            switch response.result {
-            case .success(let success):
-                completionHandler(success.results)
-            case .failure(let failure):
-                print(failure)
-            }
-        }
-    }
-    
-    func fetchTopRate(completionHandler: @escaping ([TopRates]) -> Void) {
-        let url = "discover/movie"
-        
-        AF.request(baseUrl + url, headers: header).validate(statusCode: 200..<300).responseDecodable(of: TopModel.self) { response in
+        AF.request(api.endPoint, method: api.method, headers: api.header).validate(statusCode: 200..<300).responseDecodable(of: TopModel.self) { response in
             switch response.result {
             case .success(let success):
                 completionHandler(success.results)
