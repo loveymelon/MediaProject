@@ -13,11 +13,12 @@ struct ContentsModel: Decodable {
 
 struct Contents: Decodable {
     let id: Int
-    let name: String
+    let name: String?
+    let title: String?
     let posterPath: String?
     
     enum CodingKeys: String, CodingKey {
-        case id, name
+        case id, name, title
         case posterPath = "poster_path"
     }
 }

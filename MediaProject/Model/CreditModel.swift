@@ -14,8 +14,20 @@ struct CreditModel: Decodable {
 
 struct CastModel: Decodable {
     var name: String
+    var profilePath: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case profilePath = "profile_path"
+    }
 }
 
 struct CrewModel: Decodable {
     var name: String
+    var profilePath: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case profilePath = "profile_path"
+    }
 }

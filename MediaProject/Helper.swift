@@ -10,4 +10,5 @@ import Foundation
 enum Helper {
     static let movieTableCellIdentifier = "MovieTableViewCell"
     static let movieCollectionCellIdentifier = "MovieCollectionCell"
+    static let detailTableHeaderIdentifier = "DetailTableViewHeaderView"
 }

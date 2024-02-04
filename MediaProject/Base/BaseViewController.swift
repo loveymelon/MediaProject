@@ -14,21 +14,12 @@ class BaseViewController: UIViewController {
 
         self.view.backgroundColor = .black
         
-        configureHierarchy()
-        configureLayout()
         configureView()
     }
     
-    func configureHierarchy() {
-        
-    }
-    
-    func configureLayout() {
-        
-    }
-    
     func configureView() {
-        
+        self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
+        self.navigationController?.navigationBar.tintColor = .white
     }
 
 }

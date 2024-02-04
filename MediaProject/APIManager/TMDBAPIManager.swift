@@ -21,60 +21,9 @@ struct TMDBAPIManager {
         "Authorization": APIKey.key
     ]
     
-    func fetchContents(api: TMDBAPI, completionHandler: @escaping (ContentsModel) -> Void) {
+    func fetchContents<T: Decodable>(type: T.Type, api: TMDBAPI, completionHandler: @escaping (T) -> Void) {
         
-        AF.request(api.endPoint, method: api.method, headers: api.header).validate(statusCode: 200..<300).responseDecodable(of: ContentsModel.self) { response in
-            switch response.result {
-            case .success(let success):
-                completionHandler(success)
-            case .failure(let failure):
-                print(failure)
-            }
-        }
-    }
-    
-    func fetchTopRate(api: TMDBAPI, completionHandler: @escaping ([TopRates]) -> Void) {
-        
-        AF.request(api.endPoint, method: api.method, headers: api.header).validate(statusCode: 200..<300).responseDecodable(of: TopModel.self) { response in
-            switch response.result {
-            case .success(let success):
-                completionHandler(success.results)
-            case .failure(let failure):
-                print(failure)
-            }
-        }
-    }
-    
-    func fetchDetail(id: Int, completionHandler: @escaping (TVDetailModel) -> Void) {
-        let url = "tv/\(id)"
-        
-        AF.request(baseUrl + url, headers: header).validate(statusCode: 200..<300).responseDecodable(of: TVDetailModel.self) { response in
-            switch response.result {
-            case .success(let success):
-                completionHandler(success)
-            case .failure(let failure):
-                print(failure)
-            }
-        }
-    }
-    
-    func fetchRecommend(id: Int, completionHandler: @escaping ([RecommendTV]) -> Void) {
-        let url = "tv/\(id)/recommendations"
-        
-        AF.request(baseUrl + url, headers: header).validate(statusCode: 200..<300).responseDecodable(of: RecommendModel.self) { response in
-            switch response.result {
-            case .success(let success):
-                completionHandler(success.results)
-            case .failure(let failure):
-                print(failure)
-            }
-        }
-    }
-    
-    func fetchCredits(id: Int, completionHandler: @escaping (CreditModel) -> Void) {
-        let url = "tv/\(id)/aggregate_credits"
-        
-        AF.request(baseUrl + url, headers: header).validate(statusCode: 200..<300).responseDecodable(of: CreditModel.self) { response in
+        AF.request(api.endPoint, method: api.method, parameters: api.parameter, encoding: api.urlEncoding, headers: api.header).validate(statusCode: 200..<300).responseDecodable(of: T.self) { response in
             switch response.result {
             case .success(let success):
                 completionHandler(success)

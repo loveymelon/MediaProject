@@ -7,14 +7,14 @@
 
 import UIKit
 import SnapKit
+import Then
 
 class MainView: UIView {
-    let tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.rowHeight = UIScreen.main.bounds.height / 3
-        tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: Helper.movieTableCellIdentifier)
-        return tableView
-    }()
+    
+    let tableView = UITableView().then {
+        $0.rowHeight = UIScreen.main.bounds.height / 3
+        $0.register(MovieTableViewCell.self, forCellReuseIdentifier: Helper.movieTableCellIdentifier)
+    }
     
     let titleArray = ["Popular", "Top Rate", "Trending"]
     

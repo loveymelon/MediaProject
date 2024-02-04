@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class MovieCollectionViewCell: UICollectionViewCell {
     let mainImageView: UIImageView = {
@@ -21,6 +22,8 @@ class MovieCollectionViewCell: UICollectionViewCell {
         label.font = .systemFont(ofSize: 12)
         return label
     }()
+    
+    let baseUrl = "https://image.tmdb.org/t/p/w500"
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -57,6 +60,20 @@ extension MovieCollectionViewCell: ConfigureUIProtocol {
     
     func configureView() {
         self.backgroundColor = .black
+    }
+    
+    func configureCell(item: Contents) {
+        
+        self.imageLabel.text = item.name == nil ? item.title : item.name
+        
+        switch item.posterPath {
+        case .none:
+            self.mainImageView.image = UIImage(systemName: "xmark")
+        case .some(let imagePath):
+            let url = URL(string: baseUrl + imagePath)
+            self.mainImageView.kf.setImage(with: url)
+        }
+        
     }
     
 }
