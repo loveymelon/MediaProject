@@ -74,7 +74,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let item = data.results[indexPath.item]
         
-        cell.configureCell(item: item)
+        cell.configureContentsCell(item: item)
         
         return cell
     }
@@ -84,7 +84,14 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let item = dic[collectionView.layer.name!] as! ContentsModel
         
+        if collectionView.layer.name == mainView.titleArray[1] {
+            detailVC.movie = true
+        } else {
+            detailVC.movie = false
+        }
+        
         detailVC.id = item.results[indexPath.item].id
+        print(detailVC.id)
         
         self.navigationController?.pushViewController(detailVC, animated: true)
     }

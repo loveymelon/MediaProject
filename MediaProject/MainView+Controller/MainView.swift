@@ -11,7 +11,8 @@ import Then
 
 class MainView: UIView {
     
-    let tableView = UITableView().then {
+    let tableView = UITableView(frame: .zero, style: .grouped).then {
+        $0.sectionHeaderHeight = UITableView.automaticDimension
         $0.rowHeight = UIScreen.main.bounds.height / 3
         $0.register(MovieTableViewCell.self, forCellReuseIdentifier: Helper.movieTableCellIdentifier)
     }

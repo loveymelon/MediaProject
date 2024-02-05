@@ -30,6 +30,7 @@
 		DF60FFF62B690C72005AA206 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF60FFF42B690C72005AA206 /* Main.storyboard */; };
 		DF60FFF82B690C74005AA206 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF60FFF72B690C74005AA206 /* Assets.xcassets */; };
 		DF60FFFB2B690C74005AA206 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF60FFF92B690C74005AA206 /* LaunchScreen.storyboard */; };
+		DF855F622B710CCD00E67900 /* DetailModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF855F612B710CCD00E67900 /* DetailModels.swift */; };
 		DF86A6152B6F8CC40010033F /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF86A6142B6F8CC40010033F /* DetailView.swift */; };
 		DF86A6182B6FC6A60010033F /* DetailTableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF86A6172B6FC6A60010033F /* DetailTableViewHeaderView.swift */; };
 		DF885C282B6E1D41002DA19F /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = DF885C272B6E1D41002DA19F /* Then */; };
@@ -59,6 +60,7 @@
 		DF60FFF72B690C74005AA206 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DF60FFFA2B690C74005AA206 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DF60FFFC2B690C74005AA206 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DF855F612B710CCD00E67900 /* DetailModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModels.swift; sourceTree = "<group>"; };
 		DF86A6142B6F8CC40010033F /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		DF86A6172B6FC6A60010033F /* DetailTableViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewHeaderView.swift; sourceTree = "<group>"; };
 		DF8CD0B32B6BC16A006095F3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				DF5EF77A2B6A6FF2003CB20C /* TVDetailModel.swift */,
 				DF5EF7832B6A88AA003CB20C /* CreditModel.swift */,
 				DF5EF7812B6A8496003CB20C /* RecommendModel.swift */,
+				DF855F612B710CCD00E67900 /* DetailModels.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				DF5EF77D2B6A732A003CB20C /* TVDetailViewController.swift in Sources */,
 				DF60FFEF2B690C72005AA206 /* AppDelegate.swift in Sources */,
 				DF8CD0B72B6BC852006095F3 /* TMDBAPI.swift in Sources */,
+				DF855F622B710CCD00E67900 /* DetailModels.swift in Sources */,
 				DF5EF77B2B6A6FF2003CB20C /* TVDetailModel.swift in Sources */,
 				DF5EF7822B6A8496003CB20C /* RecommendModel.swift in Sources */,
 				DF60FFF12B690C72005AA206 /* SceneDelegate.swift in Sources */,

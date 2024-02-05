@@ -62,8 +62,7 @@ extension MovieCollectionViewCell: ConfigureUIProtocol {
         self.backgroundColor = .black
     }
     
-    func configureCell(item: Contents) {
-        
+    func configureContentsCell(item: Contents) {
         self.imageLabel.text = item.name == nil ? item.title : item.name
         
         switch item.posterPath {
@@ -74,6 +73,42 @@ extension MovieCollectionViewCell: ConfigureUIProtocol {
             self.mainImageView.kf.setImage(with: url)
         }
         
+    }
+    
+    func configureCastCell(item: CastModel) {
+        self.imageLabel.text = item.name
+        
+        switch item.profilePath {
+        case .none:
+            self.mainImageView.image = UIImage(systemName: "xmark")
+        case .some(let imagePath):
+            let url = URL(string: baseUrl + imagePath)
+            self.mainImageView.kf.setImage(with: url)
+        }
+    }
+    
+    func configureCrewCell(item: CrewModel) {
+        self.imageLabel.text = item.name
+        
+        switch item.profilePath {
+        case .none:
+            self.mainImageView.image = UIImage(systemName: "xmark")
+        case .some(let imagePath):
+            let url = URL(string: baseUrl + imagePath)
+            self.mainImageView.kf.setImage(with: url)
+        }
+    }
+    
+    func configureRecommendCell(item: RecommendTV) {
+        self.imageLabel.text = item.name
+        
+        switch item.posterPath {
+        case .none:
+            self.mainImageView.image = UIImage(systemName: "xmark")
+        case .some(let imagePath):
+            let url = URL(string: baseUrl + imagePath)
+            self.mainImageView.kf.setImage(with: url)
+        }
     }
     
 }

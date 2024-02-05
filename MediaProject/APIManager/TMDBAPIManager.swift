@@ -22,7 +22,6 @@ struct TMDBAPIManager {
     ]
     
     func fetchContents<T: Decodable>(type: T.Type, api: TMDBAPI, completionHandler: @escaping (T) -> Void) {
-        
         AF.request(api.endPoint, method: api.method, parameters: api.parameter, encoding: api.urlEncoding, headers: api.header).validate(statusCode: 200..<300).responseDecodable(of: T.self) { response in
             switch response.result {
             case .success(let success):

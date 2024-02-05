@@ -21,9 +21,9 @@ enum TMDBAPI {
     case popular
     case trendingTV
     case topRate
-    case detail(id: Int)
-    case credit(id: Int)
-    case recommend(id: Int)
+    case detail(id: Int, movie: Bool)
+    case credit(id: Int, movie: Bool)
+    case recommend(id: Int, movie: Bool)
     
     var endPoint: String {
         switch self {
@@ -33,12 +33,12 @@ enum TMDBAPI {
             return baseUrl + "trending/tv/week"
         case .topRate:
             return baseUrl + "discover/movie"
-        case .detail(id: let id):
-            return baseUrl + "tv/\(id)"
-        case .credit(id: let id):
-            return baseUrl + "tv/\(id)/aggregate_credits"
-        case .recommend(id: let id):
-            return baseUrl + "tv/\(id)/recommendations"
+        case .detail(let id, let movie):
+            return movie == false ? baseUrl + "tv/\(id)" : baseUrl + "movie/\(id)"
+        case .credit(let id, let movie):
+            return movie == false ? baseUrl + "tv/\(id)/aggregate_credits" : baseUrl + "movie/\(id)/credits"
+        case .recommend(let id, let movie):
+            return movie == false ? baseUrl + "tv/\(id)/recommendations" : baseUrl + "movie/\(id)/recommendations"
         }
     }
     

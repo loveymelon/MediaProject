@@ -15,7 +15,7 @@ struct RecommendModel: Decodable {
 }
 
 struct RecommendTV: Decodable {
-    let posterPath: String
+    let posterPath: String?
     let name: String
     
     enum CodingKeys: String, CodingKey {

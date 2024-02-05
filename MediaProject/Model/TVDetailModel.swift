@@ -9,9 +9,10 @@ import Foundation
 
 struct TVDetailModel: Decodable {
     let backdropPath: String?
-    let name: String
-    let numberOfEpisodes: Int
-    let numberOfSeasons: Int
+    let name: String?
+    let originalTitle: String?
+    let numberOfEpisodes: Int?
+    let numberOfSeasons: Int?
     let overview: String
     
     enum CodingKeys: String, CodingKey {
@@ -19,6 +20,7 @@ struct TVDetailModel: Decodable {
         case name
         case numberOfEpisodes = "number_of_episodes"
         case numberOfSeasons = "number_of_seasons"
+        case originalTitle = "original_title"
         case overview
     }
 }
