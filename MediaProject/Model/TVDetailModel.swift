@@ -13,7 +13,7 @@ struct TVDetailModel: Decodable {
     let originalTitle: String?
     let numberOfEpisodes: Int?
     let numberOfSeasons: Int?
-    let overview: String
+    let overview: String?
     
     enum CodingKeys: String, CodingKey {
         case backdropPath = "backdrop_path"

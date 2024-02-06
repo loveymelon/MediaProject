@@ -37,6 +37,11 @@ class DetailTableViewHeaderView: UITableViewHeaderFooterView {
     }
     
     let baseUrl = "https://image.tmdb.org/t/p/w500"
+    var movie: Bool = false {
+        didSet {
+            configureUI()
+        }
+    }
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -60,8 +65,10 @@ extension DetailTableViewHeaderView: ConfigureUIProtocol {
     func configureHierarchy() {
         contentView.addSubview(backImageView)
         contentView.addSubview(nameLabel)
-        contentView.addSubview(episodesNumber)
-        contentView.addSubview(seasonNumber)
+        if movie == false {
+            contentView.addSubview(episodesNumber)
+            contentView.addSubview(seasonNumber)
+        }
         contentView.addSubview(overviewLabel)
     }
     
@@ -76,20 +83,28 @@ extension DetailTableViewHeaderView: ConfigureUIProtocol {
             make.horizontalEdges.equalTo(self.contentView.snp.horizontalEdges).inset(10)
             make.height.equalTo(40)
         }
-        self.episodesNumber.snp.makeConstraints { make in
-            make.top.equalTo(self.nameLabel.snp.bottom).offset(10)
-            make.leading.equalTo(self.contentView.snp.leading).inset(10)
-            make.height.equalTo(22)
-        }
-        self.seasonNumber.snp.makeConstraints { make in
-            make.top.equalTo(self.episodesNumber.snp.top)
-            make.leading.equalTo(self.episodesNumber.snp.trailing).offset(5)
-            make.height.equalTo(22)
-        }
-        self.overviewLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.episodesNumber.snp.bottom).offset(5)
-            make.horizontalEdges.equalTo(self.contentView).inset(10)
-            make.bottom.equalToSuperview()
+        if movie == false {
+            self.episodesNumber.snp.makeConstraints { make in
+                make.top.equalTo(self.nameLabel.snp.bottom).offset(10)
+                make.leading.equalTo(self.contentView.snp.leading).inset(10)
+                make.height.equalTo(22)
+            }
+            self.seasonNumber.snp.makeConstraints { make in
+                make.top.equalTo(self.episodesNumber.snp.top)
+                make.leading.equalTo(self.episodesNumber.snp.trailing).offset(5)
+                make.height.equalTo(22)
+            }
+            self.overviewLabel.snp.makeConstraints { make in
+                make.top.equalTo(self.episodesNumber.snp.bottom)
+                make.horizontalEdges.equalTo(self.contentView).inset(10)
+                make.bottom.equalToSuperview()
+            }
+        } else {
+            self.overviewLabel.snp.makeConstraints { make in
+                make.top.equalTo(self.nameLabel.snp.bottom)
+                make.horizontalEdges.equalTo(self.contentView).inset(10)
+                make.bottom.equalToSuperview()
+            }
         }
     }
     
@@ -99,10 +114,13 @@ extension DetailTableViewHeaderView: ConfigureUIProtocol {
 extension DetailTableViewHeaderView {
     func configureHearder(item: TVDetailModel) {
         
-        self.nameLabel.text = item.name
-        self.episodesNumber.text = "에피소드 \(item.numberOfEpisodes)화"
-        self.seasonNumber.text = "시즌 \(item.numberOfSeasons)"
+        self.nameLabel.text = movie == false ? item.name : item.originalTitle
+        if movie == false {
+            self.episodesNumber.text = "에피소드 \(item.numberOfEpisodes)화"
+            self.seasonNumber.text = "시즌 \(item.numberOfSeasons)"
+        }
         self.overviewLabel.text = item.overview
+        print(item.overview)
         
         switch item.backdropPath {
         case .none:

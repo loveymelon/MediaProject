@@ -30,6 +30,7 @@
 		DF60FFF62B690C72005AA206 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF60FFF42B690C72005AA206 /* Main.storyboard */; };
 		DF60FFF82B690C74005AA206 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF60FFF72B690C74005AA206 /* Assets.xcassets */; };
 		DF60FFFB2B690C74005AA206 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF60FFF92B690C74005AA206 /* LaunchScreen.storyboard */; };
+		DF6EEF0C2B71EE2800DC86AF /* TMDBSessionAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6EEF0B2B71EE2800DC86AF /* TMDBSessionAPIManager.swift */; };
 		DF855F622B710CCD00E67900 /* DetailModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF855F612B710CCD00E67900 /* DetailModels.swift */; };
 		DF86A6152B6F8CC40010033F /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF86A6142B6F8CC40010033F /* DetailView.swift */; };
 		DF86A6182B6FC6A60010033F /* DetailTableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF86A6172B6FC6A60010033F /* DetailTableViewHeaderView.swift */; };
@@ -60,6 +61,7 @@
 		DF60FFF72B690C74005AA206 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DF60FFFA2B690C74005AA206 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DF60FFFC2B690C74005AA206 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DF6EEF0B2B71EE2800DC86AF /* TMDBSessionAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBSessionAPIManager.swift; sourceTree = "<group>"; };
 		DF855F612B710CCD00E67900 /* DetailModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModels.swift; sourceTree = "<group>"; };
 		DF86A6142B6F8CC40010033F /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		DF86A6172B6FC6A60010033F /* DetailTableViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewHeaderView.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 			children = (
 				DF8CD0B62B6BC852006095F3 /* TMDBAPI.swift */,
 				DF6000072B690ED8005AA206 /* TMDBAPIManager.swift */,
+				DF6EEF0B2B71EE2800DC86AF /* TMDBSessionAPIManager.swift */,
 			);
 			path = APIManager;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 				DF60001B2B6911AB005AA206 /* APIKey.swift in Sources */,
 				DF6000232B69164F005AA206 /* MovieCollectionViewCell.swift in Sources */,
 				DF86A6182B6FC6A60010033F /* DetailTableViewHeaderView.swift in Sources */,
+				DF6EEF0C2B71EE2800DC86AF /* TMDBSessionAPIManager.swift in Sources */,
 				DF5EF7842B6A88AA003CB20C /* CreditModel.swift in Sources */,
 				DF5EF7802B6A7920003CB20C /* BaseViewController.swift in Sources */,
 				DF6000082B690ED8005AA206 /* TMDBAPIManager.swift in Sources */,

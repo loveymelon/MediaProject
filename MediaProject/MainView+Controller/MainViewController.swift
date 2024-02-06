@@ -11,7 +11,7 @@ class MainViewController: UIViewController {
     
     let mainView = MainView()
     
-    var dic: [String: Any] = [:]
+    var dic: [String: Decodable] = [:]
     var apiArray: [TMDBAPI] = [.popular, .topRate, .trendingTV]
     
     let group = DispatchGroup()
@@ -117,6 +117,18 @@ extension MainViewController {
         
         group.notify(queue: .main) { [self] in
             mainView.tableView.reloadData()
+        }
+    }
+    
+    func sessionNetworking() {
+        for (index, api) in apiArray.enumerated() {
+            group.enter()
+            
+            TMDBSessionAPIManager.shared.fetchContetns(type: ContentsModel.self, api: api) { [self] result, error in
+                dic[mainView.titleArray[index]] = result
+                
+                group.leave()
+            }
         }
     }
 }

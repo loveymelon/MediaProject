@@ -14,9 +14,12 @@ class TVDetailViewController: BaseViewController {
     let mainView = DetailView()
     
     var id: Int?
-    var movie: Bool = false
+    var movie: Bool = false // 영화인지 티비인지 여부에 따라 네트워크 통신, 레이아웃이 달라짐
     
-    var dic: [String: DetailModels] = [:]
+//    var detailData: TVDetailModel = TVDetailModel(backdropPath: nil, name: nil, originalTitle: nil, numberOfEpisodes: nil, numberOfSeasons: nil, overview: "")
+    var detaildata: TVDetailModel?
+    var credit: CreditModel?
+    var recommend: RecommendModel?
     
     let dataKeys = ["cast", "crew", "recommend"]
     let group = DispatchGroup()
@@ -27,28 +30,29 @@ class TVDetailViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(movie)
         
         group.enter()
         TMDBAPIManager.shared.fetchContents(type: TVDetailModel.self, api: .detail(id: id!, movie: movie)) { [self] result in
-            dic["detail"] = .detail(data: result)
+            detaildata = result
             group.leave()
         }
         
         group.enter()
         TMDBAPIManager.shared.fetchContents(type: CreditModel.self, api: .credit(id: id!, movie: movie)) { [self] result in
-            dic[dataKeys[0]] = .cast(data: result.cast)
-            dic[dataKeys[1]] = .crew(data: result.crew)
+            credit = result
             group.leave()
         }
         
         group.enter()
         TMDBAPIManager.shared.fetchContents(type: RecommendModel.self, api: .recommend(id: id!, movie: movie)) { [self] result in
-            dic[dataKeys[2]] = .recommend(data: result)
+            recommend = result
             self.group.leave()
         }
         
         group.notify(queue: .main) { [self] in
             mainView.tableView.reloadData()
+            
         }
     }
     
@@ -73,6 +77,7 @@ extension TVDetailViewController: UITableViewDelegate, UITableViewDataSource {
         cell.movieCollectionView.dataSource = self
         cell.movieCollectionView.layer.name = dataKeys[indexPath.row]
         cell.movieCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: Helper.movieCollectionCellIdentifier)
+        cell.configureCell(data: dataKeys[indexPath.row])
         cell.movieCollectionView.reloadData()
         return cell
     }
@@ -80,19 +85,22 @@ extension TVDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: Helper.detailTableHeaderIdentifier) as! DetailTableViewHeaderView
         
-        if dic["detail"] == nil {
-            return headerView
-        }
+        guard let data = detaildata else { return headerView }
         
-        let data = dic["detail"]?.data as! TVDetailModel
-        
+        headerView.movie = self.movie
         headerView.configureHearder(item: data)
+        print(#function)
         
         return headerView
+        
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         return UIScreen.main.bounds.height / 3
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return .leastNormalMagnitude
     }
 }
 
@@ -100,28 +108,42 @@ extension TVDetailViewController: UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        guard let key = collectionView.layer.name else {
+        guard let key = collectionView.layer.name else { return 0 }
+        
+        switch key {
+        case dataKeys[0]:
+            guard let castData = credit?.cast else { return 0 }
+            return castData.count
+        case dataKeys[1]:
+            guard let crewData = credit?.crew else { return 0 }
+            return crewData.count
+        case dataKeys[2]:
+            guard let recommendData = recommend else { return 0 }
+            return recommendData.results.count
+        default:
             return 0
         }
         
-        return dic[key]?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Helper.movieCollectionCellIdentifier, for: indexPath) as! MovieCollectionViewCell
         guard let key = collectionView.layer.name else { return cell }
-        var tempData = dic[key]?.data
         
         switch key {
         case dataKeys[0]:
-            let data = tempData as! [CastModel]
-            cell.configureCastCell(item: data[indexPath.item])
+            guard let cast = credit?.cast else { return cell }
+            let castData = cast[indexPath.item]
+            cell.configureCastCell(item: castData)
         case dataKeys[1]:
-            let data = tempData as! [CrewModel]
-            cell.configureCrewCell(item: data[indexPath.item])
+            guard let crew = credit?.crew else { return cell }
+//            print(indexPath.item, crew.count)
+            let crewData = crew[indexPath.item]
+            cell.configureCrewCell(item: crewData)
         case dataKeys[2]:
-            let data = tempData as! RecommendModel
-            cell.configureRecommendCell(item: data.results[indexPath.item])
+            guard let recommend = recommend?.results else { return cell }
+            let recommendData = recommend[indexPath.item]
+            cell.configureRecommendCell(item: recommendData)
         default:
             print("error")
         }
