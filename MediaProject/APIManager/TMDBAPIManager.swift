@@ -12,22 +12,17 @@ struct TMDBAPIManager {
     
     static let shared = TMDBAPIManager()
     
+    typealias CompletionHandler<T: Decodable> = (T?, SeSACError?) -> Void
+    
     private init() { }
     
-    let baseUrl = "https://api.themoviedb.org/3/"
-    
-    let header: HTTPHeaders = [
-        "accept": "application/json",
-        "Authorization": APIKey.key
-    ]
-    
-    func fetchContents<T: Decodable>(type: T.Type, api: TMDBAPI, completionHandler: @escaping (T) -> Void) {
+    func fetchContents<T: Decodable>(type: T.Type, api: TMDBAPI, completionHandler: @escaping CompletionHandler<T>) {
         AF.request(api.endPoint, method: api.method, parameters: api.parameter, encoding: api.urlEncoding, headers: api.header).validate(statusCode: 200..<300).responseDecodable(of: T.self) { response in
             switch response.result {
             case .success(let success):
-                completionHandler(success)
+                completionHandler(success, nil)
             case .failure(let failure):
-                print(failure)
+                completionHandler(nil, .invalidData)
             }
         }
     }

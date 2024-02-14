@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-class DetailView: UIView {
+final class DetailView: UIView {
     
     let tableView = UITableView(frame: .zero, style: .grouped).then {
         $0.rowHeight = UIScreen.main.bounds.height / 3

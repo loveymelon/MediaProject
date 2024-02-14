@@ -169,7 +169,6 @@
 		DF60FFED2B690C72005AA206 /* MediaProject */ = {
 			isa = PBXGroup;
 			children = (
-				DF86A6162B6F91D70010033F /* Extension */,
 				DF8CD0B52B6BC1CC006095F3 /* MainView+Controller */,
 				DF6000142B690F02005AA206 /* DetailView+Controller */,
 				DF5EF77E2B6A7913003CB20C /* Base */,
@@ -188,13 +187,6 @@
 				DF60001F2B6914FE005AA206 /* Helper.swift */,
 			);
 			path = MediaProject;
-			sourceTree = "<group>";
-		};
-		DF86A6162B6F91D70010033F /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extension;
 			sourceTree = "<group>";
 		};
 		DF8CD0B52B6BC1CC006095F3 /* MainView+Controller */ = {

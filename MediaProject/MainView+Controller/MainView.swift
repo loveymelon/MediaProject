@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-class MainView: UIView {
+final class MainView: UIView {
     
     let tableView = UITableView(frame: .zero, style: .grouped).then {
         $0.sectionHeaderHeight = UITableView.automaticDimension

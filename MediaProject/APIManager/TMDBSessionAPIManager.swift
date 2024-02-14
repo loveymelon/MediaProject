@@ -10,11 +10,10 @@ import Foundation
 enum SeSACError: Error {
     case failedRequest
     case noData
+    case invalidUrl
     case invalidResponse
     case invalidData
 }
-
-
 
 struct TMDBSessionAPIManager {
     
@@ -25,11 +24,16 @@ struct TMDBSessionAPIManager {
     private init() { }
     
     func fetchContetns<T: Decodable>(type: T.Type, api: TMDBAPI, completionHandler: @escaping CompletionHandler<T>) {
-        var url = URLRequest(url: URL(string: api.endPoint)!)
         
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            
-            guard let error = error else {
+        var urlRequest = URLRequest(url: URL(string: api.endPoint)!)
+        
+        urlRequest.httpMethod = "GET"
+//        urlRequest.headers = api.header
+        urlRequest.addValue(APIKey.key, forHTTPHeaderField: "Authorization")
+        print(urlRequest)
+        
+        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            guard error == nil else {
                 print(error)
                 completionHandler(nil, .failedRequest)
                 return
@@ -55,8 +59,6 @@ struct TMDBSessionAPIManager {
             print(#function)
             do {
                 let result = try JSONDecoder().decode(T.self, from: data)
-                dump(result)
-                
                 completionHandler(result, nil)
                 
                 

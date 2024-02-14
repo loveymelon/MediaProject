@@ -9,20 +9,20 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class TVDetailViewController: BaseViewController {
+final class TVDetailViewController: BaseViewController {
     
-    let mainView = DetailView()
+    private let mainView = DetailView()
     
     var id: Int?
     var movie: Bool = false // 영화인지 티비인지 여부에 따라 네트워크 통신, 레이아웃이 달라짐
     
 //    var detailData: TVDetailModel = TVDetailModel(backdropPath: nil, name: nil, originalTitle: nil, numberOfEpisodes: nil, numberOfSeasons: nil, overview: "")
-    var detaildata: TVDetailModel?
-    var credit: CreditModel?
-    var recommend: RecommendModel?
+    private var detaildata: TVDetailModel?
+    private var credit: CreditModel?
+    private var recommend: RecommendModel?
     
-    let dataKeys = ["cast", "crew", "recommend"]
-    let group = DispatchGroup()
+    private let dataKeys = ["cast", "crew", "recommend"]
+    private var saError: SeSACError?
     
     override func loadView() {
         self.view = mainView
@@ -30,30 +30,8 @@ class TVDetailViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(movie)
         
-        group.enter()
-        TMDBAPIManager.shared.fetchContents(type: TVDetailModel.self, api: .detail(id: id!, movie: movie)) { [self] result in
-            detaildata = result
-            group.leave()
-        }
         
-        group.enter()
-        TMDBAPIManager.shared.fetchContents(type: CreditModel.self, api: .credit(id: id!, movie: movie)) { [self] result in
-            credit = result
-            group.leave()
-        }
-        
-        group.enter()
-        TMDBAPIManager.shared.fetchContents(type: RecommendModel.self, api: .recommend(id: id!, movie: movie)) { [self] result in
-            recommend = result
-            self.group.leave()
-        }
-        
-        group.notify(queue: .main) { [self] in
-            mainView.tableView.reloadData()
-            
-        }
     }
     
     override func configureView() {
@@ -62,6 +40,34 @@ class TVDetailViewController: BaseViewController {
         mainView.tableView.dataSource = self
         mainView.tableView.delegate = self
         
+    }
+    
+    override func networkingData() {
+        group.enter()
+        TMDBAPIManager.shared.fetchContents(type: TVDetailModel.self, api: .detail(id: id!, movie: movie)) { [self] result, error  in
+            detaildata = result
+            saError = error
+            group.leave()
+        }
+        
+        group.enter()
+        TMDBAPIManager.shared.fetchContents(type: CreditModel.self, api: .credit(id: id!, movie: movie)) { [self] result, error  in
+            credit = result
+            saError = error
+            group.leave()
+        }
+        
+        group.enter()
+        TMDBAPIManager.shared.fetchContents(type: RecommendModel.self, api: .recommend(id: id!, movie: movie)) { [self] result, error  in
+            recommend = result
+            saError = error
+            self.group.leave()
+        }
+        
+        group.notify(queue: .main) { [self] in
+            mainView.tableView.reloadData()
+            
+        }
     }
     
 }
@@ -130,22 +136,12 @@ extension TVDetailViewController: UICollectionViewDelegate, UICollectionViewData
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Helper.movieCollectionCellIdentifier, for: indexPath) as! MovieCollectionViewCell
         guard let key = collectionView.layer.name else { return cell }
         
-        switch key {
-        case dataKeys[0]:
-            guard let cast = credit?.cast else { return cell }
-            let castData = cast[indexPath.item]
-            cell.configureCastCell(item: castData)
-        case dataKeys[1]:
-            guard let crew = credit?.crew else { return cell }
-//            print(indexPath.item, crew.count)
-            let crewData = crew[indexPath.item]
-            cell.configureCrewCell(item: crewData)
-        case dataKeys[2]:
+        if key == dataKeys[2] {
             guard let recommend = recommend?.results else { return cell }
             let recommendData = recommend[indexPath.item]
             cell.configureRecommendCell(item: recommendData)
-        default:
-            print("error")
+        } else {
+            cell.configureCreditCell(itemModel: self.credit, dataKey: key, index: indexPath.item)
         }
         
         return cell

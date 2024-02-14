@@ -10,33 +10,33 @@ import SnapKit
 import Kingfisher
 import Then
 
-class DetailTableViewHeaderView: UITableViewHeaderFooterView {
+final class DetailTableViewHeaderView: UITableViewHeaderFooterView {
     
-    let backImageView = UIImageView().then {
+    private let backImageView = UIImageView().then {
         $0.contentMode = .scaleToFill
     }
     
-    let nameLabel = UILabel().then {
+    private let nameLabel = UILabel().then {
         $0.textColor = .white
         $0.font = .boldSystemFont(ofSize: 20)
         $0.numberOfLines = 2
     }
     
-    let episodesNumber = UILabel().then {
+    private let episodesNumber = UILabel().then {
         $0.textColor = .lightGray
     }
     
-    let seasonNumber = UILabel().then {
+    private let seasonNumber = UILabel().then {
         $0.textColor = .lightGray
     }
     
-    let overviewLabel = UILabel().then {
+    private let overviewLabel = UILabel().then {
         $0.textColor = .lightGray
         $0.numberOfLines = 0
         $0.font = .systemFont(ofSize: 15)
     }
     
-    let baseUrl = "https://image.tmdb.org/t/p/w500"
+    private let baseUrl = "https://image.tmdb.org/t/p/w500"
     var movie: Bool = false {
         didSet {
             configureUI()

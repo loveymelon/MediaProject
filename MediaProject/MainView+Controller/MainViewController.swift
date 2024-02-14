@@ -7,14 +7,12 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+final class MainViewController: BaseViewController {
     
-    let mainView = MainView()
+    private let mainView = MainView()
     
-    var dic: [String: Decodable] = [:]
-    var apiArray: [TMDBAPI] = [.popular, .topRate, .trendingTV]
-    
-    let group = DispatchGroup()
+    private var dic: [String: Decodable] = [:]
+    private var apiArray: [TMDBAPI] = [.popular, .topRate, .trendingTV]
     
     override func loadView() {
         self.view = mainView
@@ -24,10 +22,25 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         
         tableViewSetting()
-        networking()
+        sessionNetworking()
         
     }
     
+    override func networkingData() {
+        for (index, api) in apiArray.enumerated() {
+            group.enter()
+            
+            TMDBAPIManager.shared.fetchContents(type: ContentsModel.self, api: api) { [self] result, error  in
+                dic[mainView.titleArray[index]] = result
+                
+                group.leave()
+            }
+        }
+        
+        group.notify(queue: .main) { [self] in
+            mainView.tableView.reloadData()
+        }
+    }
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
@@ -82,7 +95,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailVC = TVDetailViewController()
         
-        let item = dic[collectionView.layer.name!] as! ContentsModel
+        guard let item = dic[collectionView.layer.name!] as? ContentsModel else { return }
         
         if collectionView.layer.name == mainView.titleArray[1] {
             detailVC.movie = true
@@ -91,7 +104,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         detailVC.id = item.results[indexPath.item].id
-        print(detailVC.id)
         
         self.navigationController?.pushViewController(detailVC, animated: true)
     }
@@ -99,35 +111,22 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 }
 
 extension MainViewController {
-    func tableViewSetting() {
+    private func tableViewSetting() {
         mainView.tableView.delegate = self
         mainView.tableView.dataSource = self
     }
     
-    func networking() {
-        for (index, api) in apiArray.enumerated() {
-            group.enter()
-            
-            TMDBAPIManager.shared.fetchContents(type: ContentsModel.self, api: api) { [self] result in
-                dic[mainView.titleArray[index]] = result
-                
-                group.leave()
-            }
-        }
-        
-        group.notify(queue: .main) { [self] in
-            mainView.tableView.reloadData()
-        }
-    }
-    
-    func sessionNetworking() {
+    private func sessionNetworking() {
         for (index, api) in apiArray.enumerated() {
             group.enter()
             
             TMDBSessionAPIManager.shared.fetchContetns(type: ContentsModel.self, api: api) { [self] result, error in
                 dic[mainView.titleArray[index]] = result
-                
                 group.leave()
+            }
+            
+            group.notify(queue: .main) { [self] in
+                mainView.tableView.reloadData()
             }
         }
     }

@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-class MovieTableViewCell: UITableViewCell {
+final class MovieTableViewCell: UITableViewCell {
     
-    let categoryLabel: UILabel = {
+    private let categoryLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.textAlignment = .left
